@@ -1,0 +1,62 @@
+name: Deploy evouchers.in to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: |
+          corepack enable
+          corepack prepare yarn@3.8.7 --activate
+          yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: |
+          NODE_NO_WARNINGS=1 NEXT_TELEMETRY_DISABLED=1 yarn build
+          if [ -f out/index.html ] && [ ! -f out/404.html ]; then
+            cp out/index.html out/404.html
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
