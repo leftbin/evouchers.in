@@ -28,4 +28,4 @@ Pushes to `main` trigger GitHub Actions → GitHub Pages. Custom domain via Clou
 
 ## Design Reference
 
-Stitch designs are visual specs only (like Figma mockups). See `CG-003` in the icash-replica project for the binding guideline: never copy Stitch HTML — build from scratch with proper React architecture.
+Stitch designs are visual specs only (like Figma mockups). See `CG-003` in the evouchers project for the binding guideline: never copy Stitch HTML — build from scratch with proper React architecture.
