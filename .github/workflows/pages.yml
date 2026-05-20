@@ -39,8 +39,6 @@ jobs:
         run: yarn lint
 
       - name: Build
-        env:
-          GITHUB_PAGES: "true"
         run: |
           NODE_NO_WARNINGS=1 NEXT_TELEMETRY_DISABLED=1 yarn build
           if [ -f out/index.html ] && [ ! -f out/404.html ]; then
