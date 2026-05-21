@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   applicationName: BRAND_NAME,
   title: `${BRAND_NAME} — Your Digital Wallet for India's Connected Economy`,
   description: siteDescription,
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+  },
   openGraph: {
     siteName: BRAND_NAME,
     type: "website",
